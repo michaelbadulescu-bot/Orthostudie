@@ -1,33 +1,33 @@
 import pandas as pd
 import streamlit as st
 
-# Urgency Levels as specified by the user
+# Urgency Levels as specified by the user (German translation)
 URGENCY_LEVELS = [
-    "needs apointement in 1 day",
-    "5 days",
-    "1 week",
-    "2 Weeks",
-    "5 Weeks",
-    "not urgent"
+    "Termin in 1 Tag",
+    "5 Tage",
+    "1 Woche",
+    "2 Wochen",
+    "5 Wochen",
+    "Nicht dringend"
 ]
 
 MOCK_CASES = [
     {
         "id": "CASE_001",
-        "title": "Case 1: 45yo Male, Right Shoulder Pain",
-        "patient_history": "45-year-old male presents with acute onset of right shoulder pain following a fall while skiing. Patient reports an inability to actively abduct the arm. Weakness in external rotation. No numbness or tingling in the hand.",
+        "title": "Fall 1: 45-jähriger Mann, Schulterschmerzen rechts",
+        "patient_history": "45-jähriger Mann stellt sich mit akut aufgetretenen rechten Schulterschmerzen nach einem Sturz beim Skifahren vor. Patient berichtet über eine Unfähigkeit, den Arm aktiv abzuspreizen. Schwäche bei Außenrotation. Keine Taubheit oder Kribbeln in der Hand.",
         "image_path": "mock_xray.png"
     },
     {
         "id": "CASE_002",
-        "title": "Case 2: 62yo Female, Chronic Left Shoulder Pain",
-        "patient_history": "62-year-old female with a 6-month history of progressive left shoulder pain. Night pain is significant. Overhead activities are severely limited. Prior conservative treatment with NSAIDs and physical therapy provided minimal relief.",
+        "title": "Fall 2: 62-jährige Frau, chronische linke Schulterschmerzen",
+        "patient_history": "62-jährige Frau mit einer 6-monatigen Anamnese von zunehmenden linken Schulterschmerzen. Nachtschmerzen sind signifikant. Überkopfarbeiten sind stark eingeschränkt. Vorherige konservative Behandlung mit NSAR und Physiotherapie brachten kaum Linderung.",
         "image_path": "mock_xray_case2.png"
     },
     {
         "id": "CASE_003",
-        "title": "Case 3: 28yo Male, Recurrent Shoulder Instability",
-        "patient_history": "28-year-old male with a history of recurrent anterior dislocations of the right shoulder. First dislocation occurred 3 years ago playing rugby. Since then, he has had 4 subsequent dislocations, some occurring during sleep.",
+        "title": "Fall 3: 28-jähriger Mann, rezidivierende Schulterinstabilität",
+        "patient_history": "28-jähriger Mann mit einer Vorgeschichte von rezidivierenden vorderen Luxationen der rechten Schulter. Die erste Luxation trat vor 3 Jahren beim Rugby spielen auf. Seitdem hatte er 4 weitere Luxationen, einige davon im Schlaf.",
         "image_path": "mock_xray_case3.png"
     }
 ]

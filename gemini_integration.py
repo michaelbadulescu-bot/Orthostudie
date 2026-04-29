@@ -21,17 +21,18 @@ def extract_clinical_data(patient_history, image_path):
         model = genai.GenerativeModel('gemini-1.5-flash')
         
         prompt = f"""
-        You are an expert orthopedic AI assistant. Analyze the provided clinical history and the medical image.
-        Extract and structure the data logically to assist a General Practitioner in making a referral.
+        Du bist ein orthopädischer KI-Expertenassistent. Analysiere die vorliegende Patientenanamnese und das medizinische Bild.
+        Extrahiere und strukturiere die Daten logisch, um einen Hausarzt bei der Überweisung zu unterstützen.
+        Bitte antworte zwingend auf Deutsch.
         
-        Clinical History:
+        Patientenanamnese:
         {patient_history}
         
-        Please provide a structured summary including:
-        - Key Findings
-        - Potential Diagnosis
-        - Recommended Urgency Level for Specialist Review
-        - Suggested Next Steps / Imaging
+        Bitte erstelle eine strukturierte Zusammenfassung mit:
+        - Wichtigste Befunde
+        - Verdachtsdiagnose
+        - Empfohlene Dringlichkeit für eine fachärztliche Vorstellung
+        - Empfohlene nächste Schritte / Bildgebung
         """
         
         contents = [prompt]

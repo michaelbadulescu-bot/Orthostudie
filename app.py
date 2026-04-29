@@ -4,7 +4,7 @@ from data_manager import URGENCY_LEVELS, init_session_state, save_referral, expo
 from gemini_integration import extract_clinical_data
 
 # Set up page configuration first
-st.set_page_config(page_title="Orthopedic AI Research Prototype", layout="wide", page_icon="🦴")
+st.set_page_config(page_title="Orthopädie KI-Forschungsprototyp", layout="wide", page_icon="🦴")
 
 # Inject custom CSS for premium styling
 st.markdown("""
@@ -73,23 +73,23 @@ st.markdown("""
 init_session_state()
 
 # Sidebar Navigation
-st.sidebar.title("🦴 OrthoStudy")
+st.sidebar.title("🦴 OrthoStudie")
 st.sidebar.markdown("---")
-st.sidebar.subheader("Experimental Setup")
+st.sidebar.subheader("Experimenteller Aufbau")
 group = st.sidebar.radio(
-    "Select Group Configuration",
-    ["Control", "AI-assisted", "Gold Standard"],
-    help="Determines the level of assistance provided to the GP."
+    "Konfiguration auswählen",
+    ["Kontrollgruppe", "KI-gestützt", "Goldstandard"],
+    help="Bestimmt den Grad der KI-Unterstützung für den Hausarzt."
 )
 
 st.sidebar.markdown("---")
-with st.sidebar.expander("➕ Add Custom Case"):
+with st.sidebar.expander("➕ Eigenen Fall hinzufügen"):
     with st.form("custom_case_form", clear_on_submit=True):
-        custom_title = st.text_input("Case Title")
-        custom_history = st.text_area("Patient History")
-        custom_image = st.file_uploader("Upload Image", type=["png", "jpg", "jpeg"])
+        custom_title = st.text_input("Falltitel")
+        custom_history = st.text_area("Patientenanamnese")
+        custom_image = st.file_uploader("Bild hochladen", type=["png", "jpg", "jpeg"])
         
-        if st.form_submit_button("Save Case"):
+        if st.form_submit_button("Fall speichern"):
             if custom_title and custom_history and custom_image:
                 import os
                 if not os.path.exists("uploads"):
@@ -100,14 +100,14 @@ with st.sidebar.expander("➕ Add Custom Case"):
                     f.write(custom_image.getbuffer())
                 
                 add_custom_case(custom_title, custom_history, img_path)
-                st.success("Case added successfully!")
+                st.success("Fall erfolgreich hinzugefügt!")
                 time.sleep(1)
                 st.rerun()
             else:
-                st.error("Please fill all fields and upload an image.")
+                st.error("Bitte füllen Sie alle Felder aus und laden Sie ein Bild hoch.")
 
 st.sidebar.markdown("---")
-if st.sidebar.button("Reset Session"):
+if st.sidebar.button("Sitzung zurücksetzen"):
     st.session_state.referrals = []
     st.session_state.current_case_index = 0
     st.session_state.start_time = None
@@ -115,15 +115,15 @@ if st.sidebar.button("Reset Session"):
 
 # End of cases flow
 if st.session_state.current_case_index >= len(st.session_state.cases):
-    st.title("🎉 Session Complete")
-    st.success("You have successfully completed all cases in this study module.")
-    st.markdown("### Export Results")
-    st.write("Click below to download the session data (Time to completion, urgency levels, and referral details) for statistical analysis.")
+    st.title("🎉 Sitzung abgeschlossen")
+    st.success("Sie haben alle Fälle in diesem Studienmodul erfolgreich bearbeitet.")
+    st.markdown("### Ergebnisse exportieren")
+    st.write("Klicken Sie unten, um die Sitzungsdaten (Bearbeitungszeit, Dringlichkeitsstufen, Diagnosen) für die statistische Auswertung herunterzuladen.")
     
     csv_data = export_results_csv()
     if csv_data:
         st.download_button(
-            label="⬇️ Download CSV",
+            label="⬇️ CSV Herunterladen",
             data=csv_data,
             file_name="ortho_study_results.csv",
             mime="text/csv"
@@ -139,8 +139,8 @@ current_case = st.session_state.cases[st.session_state.current_case_index]
 
 # Header section
 st.title(current_case["title"])
-progress = f"Case {st.session_state.current_case_index + 1} of {len(st.session_state.cases)}"
-st.caption(f"**{progress}** | Current Group: **{group}**")
+progress = f"Fall {st.session_state.current_case_index + 1} von {len(st.session_state.cases)}"
+st.caption(f"**{progress}** | Aktuelle Gruppe: **{group}**")
 st.markdown("---")
 
 # Main Content Layout
@@ -148,41 +148,41 @@ col1, col2 = st.columns([1.2, 1], gap="large")
 
 with col1:
     st.markdown("<div class='case-container'>", unsafe_allow_html=True)
-    st.subheader("Patient History")
+    st.subheader("Patientenanamnese")
     st.write(current_case["patient_history"])
     
-    st.subheader("Imaging")
+    st.subheader("Bildgebung")
     try:
-        st.image(current_case["image_path"], caption="Anterior-Posterior X-Ray", use_container_width=True)
+        st.image(current_case["image_path"], caption="Röntgen/MRT-Bild", use_container_width=True)
     except FileNotFoundError:
-        st.warning("Mock image not found. Please ensure mock_xray.png is in the same directory.")
+        st.warning("Bild nicht gefunden. Bitte prüfen Sie den Dateipfad.")
     st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
     # --- AI ASSISTED LOGIC ---
-    if group == "AI-assisted":
-        st.markdown("### 🤖 AI Clinical Assistant")
-        if st.button("Generate AI Extraction"):
-            with st.spinner("Analyzing clinical data and image..."):
+    if group == "KI-gestützt":
+        st.markdown("### 🤖 Klinischer KI-Assistent")
+        if st.button("KI-Analyse generieren"):
+            with st.spinner("Analysiere klinische Daten und Bilder..."):
                 ai_result = extract_clinical_data(
                     patient_history=current_case["patient_history"],
                     image_path=current_case["image_path"]
                 )
-                st.markdown(f"<div class='ai-card'><h4>AI Extraction Summary</h4>{ai_result}</div>", unsafe_allow_html=True)
+                st.markdown(f"<div class='ai-card'><h4>KI-Extraktionszusammenfassung</h4>{ai_result}</div>", unsafe_allow_html=True)
     
     # --- GOLD STANDARD LOGIC ---
-    elif group == "Gold Standard":
-        st.markdown("### 🌟 Gold Standard Reference")
-        st.info("**Expert Orthopedic Evaluation:**\n\nPatient exhibits clear signs of acute rotator cuff tear (given weakness in external rotation and abduction inability following trauma). Immediate MRI recommended. Urgency: Needs appointment in 5 days.")
+    elif group == "Goldstandard":
+        st.markdown("### 🌟 Goldstandard-Referenz")
+        st.info("**Fachärztliche orthopädische Beurteilung:**\n\nDer Patient weist deutliche Anzeichen einer akuten Rotatorenmanschettenruptur auf (Schwäche bei Außenrotation und Unfähigkeit zur Abduktion nach Trauma). MRT umgehend empfohlen. Dringlichkeit: Termin in 5 Tagen.")
     
     # --- GP REFERRAL FORM ---
-    st.markdown("### 📝 GP Referral Submission")
+    st.markdown("### 📝 Hausarzt-Überweisungsformular")
     with st.form(key=f"form_{current_case['id']}"):
-        working_diagnosis = st.text_input("Working Diagnosis")
-        recommended_treatment = st.text_area("Recommended Treatment / Next Steps")
-        urgency = st.selectbox("Specialist Urgency Level", URGENCY_LEVELS)
+        working_diagnosis = st.text_input("Arbeitsdiagnose")
+        recommended_treatment = st.text_area("Empfohlene Behandlung / Nächste Schritte")
+        urgency = st.selectbox("Dringlichkeitsstufe für Spezialisten", URGENCY_LEVELS)
         
-        submit_button = st.form_submit_button("Submit Referral & Next Case")
+        submit_button = st.form_submit_button("Überweisung einreichen & Nächster Fall")
         
         if submit_button:
             # Calculate time spent
