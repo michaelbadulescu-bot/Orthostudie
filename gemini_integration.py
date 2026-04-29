@@ -2,11 +2,18 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 import PIL.Image
+import streamlit as st
 
 load_dotenv()
 
 # Configure the Gemini API
 API_KEY = os.getenv("GEMINI_API_KEY")
+if not API_KEY or API_KEY == "your_api_key_here":
+    try:
+        API_KEY = st.secrets["GEMINI_API_KEY"]
+    except Exception:
+        pass
+
 if API_KEY and API_KEY != "your_api_key_here":
     genai.configure(api_key=API_KEY)
 
@@ -15,7 +22,7 @@ def extract_clinical_data(patient_history, image_path):
     Uses Gemini 1.5 to extract and structure clinical data from the provided history and image.
     """
     if not API_KEY or API_KEY == "your_api_key_here":
-        return "⚠️ Gemini API key not configured. Please set GEMINI_API_KEY in the .env file."
+        return "⚠️ Gemini API-Key fehlt! Bitte in den Streamlit Settings unter 'Secrets' eintragen."
 
     try:
         model = genai.GenerativeModel('gemini-1.5-flash')
