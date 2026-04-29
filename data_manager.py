@@ -14,8 +14,8 @@ URGENCY_LEVELS = [
 MOCK_CASES = [
     {
         "id": "CASE_001",
-        "title": "Fall 1: 45-jähriger Mann, Schulterschmerzen rechts",
-        "patient_history": "45-jähriger Mann stellt sich mit akut aufgetretenen rechten Schulterschmerzen nach einem Sturz beim Skifahren vor. Patient berichtet über eine Unfähigkeit, den Arm aktiv abzuspreizen. Schwäche bei Außenrotation. Keine Taubheit oder Kribbeln in der Hand.",
+        "title": "Fall 1: 45-jähriger Mann, Schulterschmerzen links",
+        "patient_history": "45-jähriger Mann stellt sich mit akut aufgetretenen linken Schulterschmerzen nach einem Sturz beim Skifahren vor. Patient berichtet über eine Unfähigkeit, den Arm aktiv abzuspreizen. Schwäche bei Außenrotation. Keine Taubheit oder Kribbeln in der Hand.",
         "image_path": "mock_xray.png"
     },
     {
