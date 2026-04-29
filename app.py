@@ -78,7 +78,7 @@ st.sidebar.markdown("---")
 st.sidebar.subheader("Experimenteller Aufbau")
 group = st.sidebar.radio(
     "Konfiguration auswählen",
-    ["Kontrollgruppe", "KI-gestützt", "Goldstandard"],
+    ["Hausarzt", "KI", "Facharzt Orthopädie"],
     help="Bestimmt den Grad der KI-Unterstützung für den Hausarzt."
 )
 
@@ -160,7 +160,7 @@ with col1:
 
 with col2:
     # --- AI ASSISTED LOGIC ---
-    if group == "KI-gestützt":
+    if group == "KI":
         st.markdown("### 🤖 Klinischer KI-Assistent")
         if st.button("KI-Analyse generieren"):
             with st.spinner("Analysiere klinische Daten und Bilder..."):
@@ -171,7 +171,7 @@ with col2:
                 st.markdown(f"<div class='ai-card'><h4>KI-Extraktionszusammenfassung</h4>{ai_result}</div>", unsafe_allow_html=True)
     
     # --- GOLD STANDARD LOGIC ---
-    elif group == "Goldstandard":
+    elif group == "Facharzt Orthopädie":
         st.markdown("### 🌟 Goldstandard-Referenz")
         st.info("**Fachärztliche orthopädische Beurteilung:**\n\nDer Patient weist deutliche Anzeichen einer akuten Rotatorenmanschettenruptur auf (Schwäche bei Außenrotation und Unfähigkeit zur Abduktion nach Trauma). MRT umgehend empfohlen. Dringlichkeit: Termin in 5 Tagen.")
     
