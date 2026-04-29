@@ -25,7 +25,7 @@ def extract_clinical_data(patient_history, image_path):
         return "⚠️ Gemini API-Key fehlt! Bitte in den Streamlit Settings unter 'Secrets' eintragen."
 
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         prompt = f"""
         Du bist ein orthopädischer KI-Expertenassistent. Analysiere die vorliegende Patientenanamnese und das medizinische Bild.
